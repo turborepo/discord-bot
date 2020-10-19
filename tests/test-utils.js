@@ -151,6 +151,7 @@ async function makeFakeClient() {
     id: SnowflakeUtil.generate(),
     name: 'KCD',
   })
+  guild.members.fetch = () => Promise.resolve(guild.members.cache)
 
   DiscordManager.guilds[guild.id] = guild
   client.guilds.cache.set(guild.id, guild)
@@ -170,6 +171,12 @@ async function makeFakeClient() {
     guild.members.cache.set(newUser.id, newUser)
     await newUser.roles.add(memberRole)
     return newUser
+  }
+
+  async function createChannel(name, options) {
+    const channel = await guild.channels.create(name, options)
+    guild.channels.cache.set(channel.id, channel)
+    return channel
   }
 
   const kody = await createUser('kody')
@@ -218,6 +225,7 @@ async function makeFakeClient() {
     kody,
     defaultChannels,
     createUser,
+    createChannel,
     sendFromUser,
     reactFromUser,
     cleanup,

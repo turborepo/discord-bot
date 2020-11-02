@@ -8,30 +8,43 @@ require('dotenv').config({
 })
 
 const {onboarding, commands, clubApplication, admin} = require('.')
-
-const client = new Discord.Client()
+const {setup} = require('./')
+const intents = new Discord.Intents([
+  Discord.Intents.NON_PRIVILEGED,
+  'GUILD_MEMBERS',
+])
+const client = new Discord.Client({fetchAllMembers: true, ws: {intents}})
 
 console.log('logging in')
 client.login(process.env.DISCORD_BOT_TOKEN)
 
-const getKcdGuild = () => client.guilds.cache.find(({name}) => name === 'KCD')
+const getKcdGuild = () =>
+  client.guilds.cache.find(({name}) => name === 'Formium')
 const getKent = () =>
-  getKcdGuild().members.cache.find(
-    ({user: {username, discriminator}}) =>
-      username === 'kentcdodds' && discriminator === '0001',
-  )
+  getKcdGuild().members.cache.find(({user: {username, discriminator}}) => {
+    return username === 'jaredpalmer'
+  })
+const getMembers = () => getKcdGuild().members.cache
 
-client.on('ready', () => {
+client.once('ready', () => {
   console.log('ready to go')
-  commands.setup(client)
+  // setup(client)
+  // console.log(getKent())
+  // console.log(getMembers())
+
+  // console.log(getKcdGuild().members)
+
   // clubApplication.setup(client)
   // admin.setup(client)
   // onboarding.setup(client)
+  // const kent = await getKent()
   // client.on('guildMemberUpdate', admin.handleGuildMemberUpdate)
   // client.on('message', onboarding.handleNewMessage)
   // client.on('messageUpdate', onboarding.handleUpdatedMessage)
 
-  // onboarding.handleNewMember(getKent())
-
-  // cleanupGuildOnInterval(client, guild => onboarding.cleanup(guild), 5000)
+  // onboarding.handleNewMember(kent)
+  client.on('message', onboarding.handleNewMessage)
+  client.on('messageUpdate', onboarding.handleUpdatedMessage)
+  client.on('guildMemberAdd', onboarding.handleNewMember)
+  cleanupGuildOnInterval(client, guild => onboarding.cleanup(guild), 5000)
 })

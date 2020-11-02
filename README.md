@@ -1,7 +1,7 @@
 <div align="center">
 <h1>kcd-discord-bot</h1>
 
-<p>The bot for the KCD discord community (https://kcd.im/discord)</p>
+<p>The bot for the Formium Discord community (https://kcd.im/discord)</p>
 </div>
 
 ---
@@ -20,7 +20,7 @@
 
 ## The problem
 
-The KCD Community on discord needs a bot to automate onboarding and other
+The Formium Community on discord needs a bot to automate onboarding and other
 things.
 
 ## This solution
@@ -93,6 +93,7 @@ Thanks goes to these people ([emoji key][emojis]):
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors][all-contributors] specification.

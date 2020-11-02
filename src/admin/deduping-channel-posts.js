@@ -68,7 +68,7 @@ If you think your message is better suited in another channel please delete the 
 
 function setup(client) {
   // prime the message cache for relevant channels
-  const guild = client.guilds.cache.find(({name}) => name === 'KCD')
+  const guild = client.guilds.cache.find(({name}) => name === 'Formium')
   const channels = guild.channels.cache.filter(
     ch => !isWelcomeChannel(ch) && ch.type === 'text',
   )

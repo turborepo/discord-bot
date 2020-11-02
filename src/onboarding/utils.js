@@ -39,14 +39,7 @@ const hasRole = (member, roleName) =>
   member.roles.cache.some(({name}) => name === roleName)
 
 function isMemberUnconfirmed(member) {
-  const memberRoles = [
-    'Member',
-    'Moderator',
-    'MegaMod',
-    'Bot',
-    'Admin',
-    'Owner',
-  ]
+  const memberRoles = ['Member', 'Moderator', 'Bot', 'Admin', 'Owner']
   return !memberRoles.some(r => hasRole(member, r))
 }
 

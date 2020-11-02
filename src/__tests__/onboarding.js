@@ -189,7 +189,7 @@ test('the typical flow', async () => {
     
     BOT: Hello <@mock-user> 👋
 
-    I'm a bot and I'm here to welcome you to the KCD Community on Discord! Before you can join in the fun, I need to ask you a few questions. If you have any trouble, please email team@kentcdodds.com with your discord username (\`fredjoe#1234\`), an explanation of the trouble, and a screenshot of the conversation. And we'll get things fixed up for you.
+    I'm a bot and I'm here to welcome you to the Formium Community on Discord! Before you can join in the fun, I need to ask you a few questions. If you have any trouble, please email team@kentcdodds.com with your discord username (\`fredjoe#1234\`), an explanation of the trouble, and a screenshot of the conversation. And we'll get things fixed up for you.
 
     (Note, if you make a mistake, you can edit your responses).
 
@@ -220,7 +220,7 @@ test('the typical flow', async () => {
 
     **If everything's correct, simply reply \\"yes\\"**.
     fredjoe: yes
-    BOT: Awesome, welcome to the KCD Community on Discord!
+    BOT: Awesome, welcome to the Formium Community on Discord!
     BOT: 🎉 You should be good to go now. Don't forget to check fred@example.com for a confirmation email. 📬
 
     🎊 You now have access to the whole server. Welcome!
@@ -379,7 +379,7 @@ test('typing and editing to an invalid value', async () => {
     
     BOT: Hello <@mock-user> 👋
 
-    I'm a bot and I'm here to welcome you to the KCD Community on Discord! Before you can join in the fun, I need to ask you a few questions. If you have any trouble, please email team@kentcdodds.com with your discord username (\`fredjoe#1234\`), an explanation of the trouble, and a screenshot of the conversation. And we'll get things fixed up for you.
+    I'm a bot and I'm here to welcome you to the Formium Community on Discord! Before you can join in the fun, I need to ask you a few questions. If you have any trouble, please email team@kentcdodds.com with your discord username (\`fredjoe#1234\`), an explanation of the trouble, and a screenshot of the conversation. And we'll get things fixed up for you.
 
     (Note, if you make a mistake, you can edit your responses).
 
@@ -423,7 +423,7 @@ test('typing and editing to an invalid value', async () => {
 
     **If everything's correct, simply reply \\"yes\\"**.
     fredjoe: yes
-    BOT: Awesome, welcome to the KCD Community on Discord!
+    BOT: Awesome, welcome to the Formium Community on Discord!
     BOT: 🎉 You should be good to go now. Don't forget to check fred@acme.com for a confirmation email. 📬
 
     🎊 You now have access to the whole server. Welcome!
@@ -497,7 +497,7 @@ test('a new member with some info already', async () => {
     
     BOT: Hello <@mock-user> 👋
 
-    I'm a bot and I'm here to welcome you to the KCD Community on Discord! Before you can join in the fun, I need to ask you a few questions. If you have any trouble, please email team@kentcdodds.com with your discord username (\`fredjoe#1234\`), an explanation of the trouble, and a screenshot of the conversation. And we'll get things fixed up for you.
+    I'm a bot and I'm here to welcome you to the Formium Community on Discord! Before you can join in the fun, I need to ask you a few questions. If you have any trouble, please email team@kentcdodds.com with your discord username (\`fredjoe#1234\`), an explanation of the trouble, and a screenshot of the conversation. And we'll get things fixed up for you.
 
     (Note, if you make a mistake, you can edit your responses).
 
@@ -528,7 +528,7 @@ test('a new member with some info already', async () => {
 
     **If everything's correct, simply reply \\"yes\\"**.
     fredjoe: yes
-    BOT: Awesome, welcome to the KCD Community on Discord!
+    BOT: Awesome, welcome to the Formium Community on Discord!
     BOT: 🎉 You should be good to go now. 
 
     🎊 You now have access to the whole server. Welcome!

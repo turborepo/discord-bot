@@ -8,7 +8,7 @@ const {
   sendBotMessageReply,
 } = require('../utils')
 
-const availableRoles = ['Notify: Kent Live', 'Notify: Office Hours']
+const availableRoles = ['Notify: Live', 'Notify: Office Hours']
 
 function getAvailableRole(guild, roleName) {
   if (!roleName) return null
@@ -72,7 +72,7 @@ Add or remove yourself from these roles: ${rolesDisplayList}
 
 Example:
 
-${commandPrefix}roles add Kent Live
+${commandPrefix}roles add Live
 ${commandPrefix}roles remove Office Hours
     `.trim(),
   )

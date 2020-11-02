@@ -27,7 +27,7 @@ async function getConvertKitSubscriber(email) {
 const allSteps = [
   {
     name: 'name',
-    question: `What's your first name?`,
+    question: `**What's your first name?**`,
     feedback: answers => `Great, hi ${answers.name} 👋`,
     getAnswer: messageContents =>
       messageContents.match(/^Great, hi (.*?) 👋/)?.[1] ?? null,
@@ -68,10 +68,10 @@ const allSteps = [
   },
   {
     name: 'email',
-    question: `What's your email address? (This will look you up on Kent's mailing list. If you're not already on it, you'll be added and will receive a confirmation email.)`,
+    question: `**What's your email address?** (This will look you up on Formium's mailing list. If you're not already on it, you'll be added and will receive a confirmation email.)`,
     feedback: async answers => {
       if (await getConvertKitSubscriber(answers.email)) {
-        return `Oh, nice, ${answers.email} is already a part of Kent's mailing list (you rock 🤘), so you won't be getting a confirmation email after all.`
+        return `Oh, nice, ${answers.email} is already a part of Formium's mailing list (you rock 🤘), so you won't be getting a confirmation email after all.`
       }
       return `Awesome, when we're done here, you'll receive a confirmation email to: ${answers.email}.`
     },
@@ -111,54 +111,53 @@ const allSteps = [
       }
     },
   },
-  {
-    name: 'coc',
-    question: `
-Our community is commited to certain standards of behavior and we enforce that behavior to ensure it's a nice place to spend time.
+  //   {
+  //     name: 'coc',
+  //     question: `
+  // Our community is commited to certain standards of behavior and we enforce that behavior to ensure it's a nice place to spend time.
 
-Please read about our code of conduct here: https://kentcdodds.com/conduct
+  // Please read about our code of conduct here: https://kentcdodds.com/conduct
 
-Do you agree to abide by and uphold the code of conduct? **The only correct answer is "yes"**
-    `.trim(),
-    feedback: `Great, thanks for helping us keep this an awesome place to be.`,
-    getAnswer: messageContents =>
-      /^Great, thanks.*awesome place to be.$/.test(messageContents)
-        ? true
-        : null,
-    validate({message}) {
-      const response = message.content
-      if (response.toLowerCase() !== 'yes') {
-        return `You must agree to the code of conduct to join this community. Do you agree to abide by and uphold the code of conduct? (The answer must be "yes")`
-      }
-    },
-  },
-  {
-    name: 'report',
-    question: `**Based on what you read in the Code of Conduct**, what's the email address you send Code of Conduct concerns and violations to? (If you're not sure, open the code of conduct to find out).`.trim(),
-    feedback: `That's right!`,
-    getAnswer: messageContents =>
-      /^That's right.$/.test(messageContents) ? true : null,
-    validate({message, answers}) {
-      const response = message.content
-      const sameEmail =
-        response === answers.email
-          ? `Please note, I'm not looking for *your* email address again. I'm looking for the email address that's listed in the code of conduct`
-          : ''
-      if (!response.toLowerCase().includes('team@kentcdodds.com')) {
-        const mainMessage = `That's not right. **I'm testing you to make sure you actually opened the code of conduct**. Please **open the code of conduct** and copy/paste the email address listed under the heading "Have questions/need to report an issue?" We take our code of conduct seriously, so I want to make sure you've opened it. Thanks!`
-        const openCoc = `Now, please open <https://kentcdodds.com/conduct> and copy/paste the email address that's listed on that page.`
-        return [mainMessage, sameEmail, openCoc].filter(Boolean).join('\n\n')
-      }
-    },
-  },
+  // Do you agree to abide by and uphold the code of conduct? **The only correct answer is "yes"**
+  //     `.trim(),
+  //     feedback: `Great, thanks for helping us keep this an awesome place to be.`,
+  //     getAnswer: messageContents =>
+  //       /^Great, thanks.*awesome place to be.$/.test(messageContents)
+  //         ? true
+  //         : null,
+  //     validate({message}) {
+  //       const response = message.content
+  //       if (response.toLowerCase() !== 'yes') {
+  //         return `You must agree to the code of conduct to join this community. Do you agree to abide by and uphold the code of conduct? (The answer must be "yes")`
+  //       }
+  //     },
+  //   },
+  //   {
+  //     name: 'report',
+  //     question: `**Based on what you read in the Code of Conduct**, what's the email address you send Code of Conduct concerns and violations to? (If you're not sure, open the code of conduct to find out).`.trim(),
+  //     feedback: `That's right!`,
+  //     getAnswer: messageContents =>
+  //       /^That's right.$/.test(messageContents) ? true : null,
+  //     validate({message, answers}) {
+  //       const response = message.content
+  //       const sameEmail =
+  //         response === answers.email
+  //           ? `Please note, I'm not looking for *your* email address again. I'm looking for the email address that's listed in the code of conduct`
+  //           : ''
+  //       if (!response.toLowerCase().includes('team@kentcdodds.com')) {
+  //         const mainMessage = `That's not right. **I'm testing you to make sure you actually opened the code of conduct**. Please **open the code of conduct** and copy/paste the email address listed under the heading "Have questions/need to report an issue?" We take our code of conduct seriously, so I want to make sure you've opened it. Thanks!`
+  //         const openCoc = `Now, please open <https://kentcdodds.com/conduct> and copy/paste the email address that's listed on that page.`
+  //         return [mainMessage, sameEmail, openCoc].filter(Boolean).join('\n\n')
+  //       }
+  //     },
+  //   },
   {
     name: 'confirm',
     question: answers =>
       `
 Here are your answers:
   First Name: ${answers.name}
-  Email: ${answers.email}
-  Accepted Code of Conduct: ${answers.coc ? 'Yes' : 'No'}
+  Email: ${answers.email}  
 
 If you'd like to change any, then edit your responses above.
 
@@ -166,7 +165,7 @@ If you'd like to change any, then edit your responses above.
     `.trim(),
     isQuestionMessage: messageContents =>
       /^Here are your answers/.test(messageContents),
-    feedback: `Awesome, welcome to the KCD Community on Discord!`,
+    feedback: `Awesome, welcome to the Formium Community on Discord!`,
     getAnswer: messageContents =>
       /^Awesome, welcome to the KCD/.test(messageContents) ? true : null,
     action: async ({answers, member, channel, isEdit}) => {
@@ -184,8 +183,8 @@ If you'd like to change any, then edit your responses above.
       }
 
       const subscriber = await getConvertKitSubscriber(answers.email)
-      const discordTagId = '1747377'
-      const discordForm = '1547100'
+      const discordTagId = '1960709'
+      const discordForm = '1764542'
       let checkEmail = ''
       if (subscriber) {
         await got.post(
@@ -235,17 +234,11 @@ ${isEdit ? '' : `🎊 You now have access to the whole server. Welcome!`}
       )
 
       if (!isEdit) {
-        // this is a gif of Kent doing a flip with the sub-text "SWEEEET!"
-        await send('https://media.giphy.com/media/MDxjbPCg6DGf8JclbR/giphy.gif')
+        // // this is a gif of Kent doing a flip with the sub-text "SWEEEET!"
+        await send('https://media.giphy.com/media/pCO5tKdP22RC8/giphy.gif')
 
         const moreStuffMessage = `
-👆 that's Kent!
-
-I'm a pretty neat bot. Learn more about what commands you can give me by sending \`?help\`.
-
 ━━━━━━━━━━━━━━━━━━━━
-
-**If you wanna hang out here for a bit longer, I have a few questions that will help you get set up in this server a bit more.**
         `.trim()
 
         await send(`\n\n${moreStuffMessage}`)
@@ -258,144 +251,144 @@ I'm a pretty neat bot. Learn more about what commands you can give me by sending
       }
     },
   },
-  {
-    actionOnlyStep: true,
-    action: async ({channel}) => {
-      const send = getSend(channel)
-      const message = await send(
-        `Click the icon of the tech you are most interested in right now (or want to learn about). Kent will use this to give you more relevant content in the future.`,
-      )
-      const emojis = [
-        'react',
-        'jest',
-        'cypress',
-        'reacttestinglibrary',
-        'domtestinglibrary',
-        'msw',
-        'js',
-        'ts',
-        'css',
-        'html',
-        'node',
-        'reactquery',
-        'nextjs',
-        'gatsby',
-        'remix',
-        'graphql',
-      ]
+  // {
+  //   actionOnlyStep: true,
+  //   action: async ({channel}) => {
+  //     const send = getSend(channel)
+  //     const message = await send(
+  //       `Click the icon of the tech you are most interested in right now (or want to learn about). Kent will use this to give you more relevant content in the future.`,
+  //     )
+  //     const emojis = [
+  //       'react',
+  //       'jest',
+  //       'cypress',
+  //       'reacttestinglibrary',
+  //       'domtestinglibrary',
+  //       'msw',
+  //       'js',
+  //       'ts',
+  //       'css',
+  //       'html',
+  //       'node',
+  //       'reactquery',
+  //       'nextjs',
+  //       'gatsby',
+  //       'remix',
+  //       'graphql',
+  //     ]
 
-      const reactionEmoji = emojis
-        .map(emojiName =>
-          message.guild.emojis.cache.find(
-            ({name}) => name.toLowerCase() === emojiName,
-          ),
-        )
-        // it's possible the emoji title changed or was removed
-        // we should fix the list above in that case, but we don't
-        // want to crash just because of that... So we'll filter out those.
-        .filter(Boolean)
-      for (const emoji of reactionEmoji) {
-        // we want them in order
-        // eslint-disable-next-line no-await-in-loop
-        await message.react(emoji)
-      }
+  //     const reactionEmoji = emojis
+  //       .map(emojiName =>
+  //         message.guild.emojis.cache.find(
+  //           ({name}) => name.toLowerCase() === emojiName,
+  //         ),
+  //       )
+  //       // it's possible the emoji title changed or was removed
+  //       // we should fix the list above in that case, but we don't
+  //       // want to crash just because of that... So we'll filter out those.
+  //       .filter(Boolean)
+  //     for (const emoji of reactionEmoji) {
+  //       // we want them in order
+  //       // eslint-disable-next-line no-await-in-loop
+  //       await message.react(emoji)
+  //     }
 
-      // just because adding the emoji takes a second and it looks funny
-      // to have the next message come so quickly after finishing adding
-      // all the reactions.
-      await sleep(2000)
-    },
-  },
-  {
-    name: 'liveStream',
-    question: (answers, member) => {
-      const kentLiveChannel = member.guild.channels.cache.find(
-        ({name, type}) =>
-          name.toLowerCase().includes('kent-live') && type === 'text',
-      )
+  //     // just because adding the emoji takes a second and it looks funny
+  //     // to have the next message come so quickly after finishing adding
+  //     // all the reactions.
+  //     await sleep(2000)
+  //   },
+  // },
+  // {
+  //   name: 'liveStream',
+  //   question: (answers, member) => {
+  //     const kentLiveChannel = member.guild.channels.cache.find(
+  //       ({name, type}) =>
+  //         name.toLowerCase().includes('kent-live') && type === 'text',
+  //     )
 
-      return `Would you like to be notified when Kent starts live streaming in ${kentLiveChannel}?`
-    },
-    isQuestionMessage: messageContents =>
-      /Would you like to be notified when Kent starts live streaming/.test(
-        messageContents,
-      ),
-    feedback: answers => {
-      return answers.liveStream?.toLowerCase() === 'yes'
-        ? `Cool, when Kent starts live streaming, you'll get notified.`
-        : `Ok, you won't be notified when Kent starts live streaming.`
-    },
-    action: async ({answers, member}) => {
-      if (answers.liveStream !== 'yes') return
+  //     return `Would you like to be notified when Kent starts live streaming in ${kentLiveChannel}?`
+  //   },
+  //   isQuestionMessage: messageContents =>
+  //     /Would you like to be notified when Kent starts live streaming/.test(
+  //       messageContents,
+  //     ),
+  //   feedback: answers => {
+  //     return answers.liveStream?.toLowerCase() === 'yes'
+  //       ? `Cool, when Kent starts live streaming, you'll get notified.`
+  //       : `Ok, you won't be notified when Kent starts live streaming.`
+  //   },
+  //   action: async ({answers, member}) => {
+  //     if (answers.liveStream !== 'yes') return
 
-      await member.roles.add(
-        member.guild.roles.cache.find(
-          ({name}) => name.toLowerCase() === 'notify: kent live',
-        ),
-        'Requested by user during onboarding',
-      )
-    },
-    getAnswer: messageContents => {
-      return /^Cool, when Kent starts live streaming/i.test(messageContents)
-        ? 'yes'
-        : /^Ok, you won't be notified when Kent starts live streaming/.test(
-            messageContents,
-          )
-        ? 'no'
-        : null
-    },
-    validate({message}) {
-      const response = message.content
-      if (!['yes', 'no'].includes(response.toLowerCase())) {
-        return `You must answer "yes" or "no": Would you like to be notified when Kent starts live streaming?`
-      }
-    },
-  },
-  {
-    name: 'officeHours',
-    question: (answers, member) => {
-      const officeHoursChannel = member.guild.channels.cache.find(
-        ({name, type}) =>
-          name.toLowerCase().includes('office-hours') && type === 'text',
-      )
+  //     await member.roles.add(
+  //       member.guild.roles.cache.find(
+  //         ({name}) => name.toLowerCase() === 'notify: kent live',
+  //       ),
+  //       'Requested by user during onboarding',
+  //     )
+  //   },
+  //   getAnswer: messageContents => {
+  //     return /^Cool, when Kent starts live streaming/i.test(messageContents)
+  //       ? 'yes'
+  //       : /^Ok, you won't be notified when Kent starts live streaming/.test(
+  //           messageContents,
+  //         )
+  //       ? 'no'
+  //       : null
+  //   },
+  //   validate({message}) {
+  //     const response = message.content
+  //     if (!['yes', 'no'].includes(response.toLowerCase())) {
+  //       return `You must answer "yes" or "no": Would you like to be notified when Kent starts live streaming?`
+  //     }
+  //   },
+  // },
+  // {
+  //   name: 'officeHours',
+  //   question: (answers, member) => {
+  //     const officeHoursChannel = member.guild.channels.cache.find(
+  //       ({name, type}) =>
+  //         name.toLowerCase().includes('office-hours') && type === 'text',
+  //     )
 
-      return `Would you like to be notified when Kent starts <https://kcd.im/office-hours> in ${officeHoursChannel}?`
-    },
-    isQuestionMessage: messageContents =>
-      /kcd.im\/office-hours/.test(messageContents),
-    feedback: answers => {
-      return answers.officeHours?.toLowerCase() === 'yes'
-        ? `Great, you'll be notified when Kent's Office Hours start.`
-        : `No worries, you won't be notified about Kent's Office Hours.`
-    },
-    action: async ({answers, member}) => {
-      if (answers.officeHours !== 'yes') return
+  //     return `Would you like to be notified when Jared starts <https://kcd.im/office-hours> in ${officeHoursChannel}?`
+  //   },
+  //   isQuestionMessage: messageContents =>
+  //     /kcd.im\/office-hours/.test(messageContents),
+  //   feedback: answers => {
+  //     return answers.officeHours?.toLowerCase() === 'yes'
+  //       ? `Great, you'll be notified when Jared's Office Hours start.`
+  //       : `No worries, you won't be notified about Jared's Office Hours.`
+  //   },
+  //   action: async ({answers, member}) => {
+  //     if (answers.officeHours !== 'yes') return
 
-      await member.roles.add(
-        member.guild.roles.cache.find(
-          ({name}) => name.toLowerCase() === 'notify: office hours',
-        ),
-        'Requested by user during onboarding',
-      )
-    },
-    getAnswer: messageContents => {
-      return /^Great, you'll be notified when Kent's Office Hours start./i.test(
-        messageContents,
-      )
-        ? 'yes'
-        : /^No worries, you won't be notified about Kent's Office Hours./.test(
-            messageContents,
-          )
-        ? 'no'
-        : null
-    },
-    validate({message}) {
-      const response = message.content
-      if (!['yes', 'no'].includes(response.toLowerCase())) {
-        return `You must answer "yes" or "no": Would you like to be notified when Kent starts office hours?`
-      }
-    },
-  },
+  //     await member.roles.add(
+  //       member.guild.roles.cache.find(
+  //         ({name}) => name.toLowerCase() === 'notify: office hours',
+  //       ),
+  //       'Requested by user during onboarding',
+  //     )
+  //   },
+  //   getAnswer: messageContents => {
+  //     return /^Great, you'll be notified when Jared's Office Hours start./i.test(
+  //       messageContents,
+  //     )
+  //       ? 'yes'
+  //       : /^No worries, you won't be notified about Jared's Office Hours./.test(
+  //           messageContents,
+  //         )
+  //       ? 'no'
+  //       : null
+  //   },
+  //   validate({message}) {
+  //     const response = message.content
+  //     if (!['yes', 'no'].includes(response.toLowerCase())) {
+  //       return `You must answer "yes" or "no": Would you like to be notified when Jared starts office hours?`
+  //     }
+  //   },
+  // },
   {
     name: 'avatar',
     question: async answers => {
@@ -407,7 +400,7 @@ I'm a pretty neat bot. Learn more about what commands you can give me by sending
         message = `
 ${message}
 
-I got this image using your email address with gravatar.com. You can use it for your avatar if you like.
+We got this image using your email address with gravatar.com. You can use it for your avatar if you like.
 
 ${image}
         `.trim()
@@ -473,8 +466,6 @@ Enjoy the community!
       if (message.content.toLowerCase().includes('thank')) {
         return `
 You're very welcome! Thanks for your gratitude! High five ✋
-
-https://media.giphy.com/media/g3zttGo4Vo2M8/giphy.gif
 
 ${response}
         `.trim()

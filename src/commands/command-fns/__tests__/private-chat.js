@@ -88,7 +88,7 @@ Hello <@!${channelMembers[1].id}> and <@${channelMembers[0].id}> 👋
 
 I'm the bot that created this channel for you. The channel will be deleted after 1 hour or after 10 minutes for inactivity. Enjoy 🗣
 
-> Please note that the KCD Discord Server Owners and Admins *can* see this chat. So if you want to be *completely* private, then you'll need to take your communication elsewhere.
+> Please note that the Formium Discord Server Owners and Admins *can* see this chat. So if you want to be *completely* private, then you'll need to take your communication elsewhere.
 `.trim(),
   )
 

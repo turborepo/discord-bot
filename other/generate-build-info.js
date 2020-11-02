@@ -8,7 +8,7 @@ async function getCommit() {
   if (!commit) return
   try {
     const data = await got(
-      `https://api.github.com/repos/kentcdodds/kcd-discord-bot/commits/${commit}`,
+      `https://api.github.com/repos/jaredpalmer/kcd-discord-bot/commits/${commit}`,
     ).json()
     return {
       isDeployCommit: commit === 'HEAD' ? 'Unknown' : true,

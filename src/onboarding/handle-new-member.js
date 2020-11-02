@@ -7,7 +7,7 @@ async function handleNewMember(member) {
     user,
     user: {username, discriminator},
   } = member
-
+  console.log(member)
   const everyoneRole = member.guild.roles.cache.find(
     ({name}) => name === '@everyone',
   )
@@ -65,11 +65,11 @@ async function handleNewMember(member) {
     `
 Hello ${user} 👋
 
-I'm a bot and I'm here to welcome you to the KCD Community on Discord! Before you can join in the fun, I need to ask you a few questions. If you have any trouble, please email team@kentcdodds.com with your discord username (\`${username}#${discriminator}\`), an explanation of the trouble, and a screenshot of the conversation. And we'll get things fixed up for you.
+I'm a bot and I'm here to welcome you to the Formium Community on Discord! Before you can join in the fun, I need to ask you a few questions. If you have any trouble, please email support@formium.io with your discord username (\`${username}#${discriminator}\`), an explanation of the trouble, and a screenshot of the conversation. And we'll get things fixed up for you.
 
 (Note, if you make a mistake, you can edit your responses).
 
-In less than 5 minutes, you'll have full access to this server. So, let's get started! Here's the first question:
+In less than 2 minutes, you'll have full access to this server. So, let's get started! Here's the first question:
     `.trim(),
   )
 

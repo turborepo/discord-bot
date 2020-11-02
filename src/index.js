@@ -9,7 +9,7 @@ function setup(client) {
   onboarding.setup(client)
   commands.setup(client)
   admin.setup(client)
-  clubApplication.setup(client)
+  // clubApplication.setup(client)
   privateChat.setup(client)
 }
 

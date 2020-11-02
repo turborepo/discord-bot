@@ -1,7 +1,7 @@
 <div align="center">
-<h1>kcd-discord-bot</h1>
+<h1>discord-bot</h1>
 
-<p>The bot for the Formium Discord community (https://kcd.im/discord)</p>
+<p>The bot for the Formium Discord community</p>
 </div>
 
 ---

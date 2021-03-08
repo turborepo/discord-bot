@@ -189,7 +189,7 @@ test('the typical flow', async () => {
     
     BOT: Hello <@mock-user> 👋
 
-    I'm a bot and I'm here to welcome you to the Formium Community on Discord! Before you can join in the fun, I need to ask you a few questions. If you have any trouble, please email team@kentcdodds.com with your discord username (\`fredjoe#1234\`), an explanation of the trouble, and a screenshot of the conversation. And we'll get things fixed up for you.
+    I'm a bot and I'm here to welcome you to the Turborepo Community on Discord! Before you can join in the fun, I need to ask you a few questions. If you have any trouble, please email team@kentcdodds.com with your discord username (\`fredjoe#1234\`), an explanation of the trouble, and a screenshot of the conversation. And we'll get things fixed up for you.
 
     (Note, if you make a mistake, you can edit your responses).
 
@@ -220,7 +220,7 @@ test('the typical flow', async () => {
 
     **If everything's correct, simply reply \\"yes\\"**.
     fredjoe: yes
-    BOT: Awesome, welcome to the Formium Community on Discord!
+    BOT: Awesome, welcome to the Turborepo Community on Discord!
     BOT: 🎉 You should be good to go now. Don't forget to check fred@example.com for a confirmation email. 📬
 
     🎊 You now have access to the whole server. Welcome!
@@ -302,61 +302,46 @@ test('typing and editing to an invalid value', async () => {
   let emailMessage = await send('fred@example.com')
   expect(getBotResponses()).toMatchInlineSnapshot(`
     "BOT: Awesome, when we're done here, you'll receive a confirmation email to: fred@example.com.
-    BOT: Our community is commited to certain standards of behavior and we enforce that behavior to ensure it's a nice place to spend time.
+    BOT: Here are your answers:
+      First Name: Fred
+      Email: fred@example.com  
 
-    Please read about our code of conduct here: https://kentcdodds.com/conduct
+    If you'd like to change any, then edit your responses above.
 
-    Do you agree to abide by and uphold the code of conduct? **The only correct answer is \\"yes\\"**"
+    **If everything's correct, simply reply \\"yes\\"**."
   `)
 
   let cocMessage = await send('yes')
   expect(getBotResponses()).toMatchInlineSnapshot(`
-    "BOT: Great, thanks for helping us keep this an awesome place to be.
-    BOT: **Based on what you read in the Code of Conduct**, what's the email address you send Code of Conduct concerns and violations to? (If you're not sure, open the code of conduct to find out)."
+    "BOT: Awesome, welcome to the Turborepo Community on Discord!
+    BOT: 🎉 You should be good to go now. Don't forget to check fred@example.com for a confirmation email. 📬
+
+    🎊 You now have access to the whole server. Welcome!
+    BOT: https://media.giphy.com/media/pCO5tKdP22RC8/giphy.gif
+    BOT: 
+
+    ━━━━━━━━━━━━━━━━━━━━
+    BOT: Would you like to be notified about Jared's Office Hours in <#818596310033760324>?"
   `)
   await send('team@kentcdodds.com')
 
   // edit something to invalid
   emailMessage = await update(emailMessage, 'not an email')
   expect(getBotResponses()).toMatchInlineSnapshot(`
-    "BOT: That's right!
-    BOT: Here are your answers:
-      First Name: Fred
-      Email: fred@example.com
-      Accepted Code of Conduct: Yes
-
-    If you'd like to change any, then edit your responses above.
-
-    **If everything's correct, simply reply \\"yes\\"**.
+    "BOT: You must answer \\"yes\\" or \\"no\\": Would you like to be notified when Jared starts office hours?
     BOT: There's a problem with an edit that was just made. Please edit the answer again to fix it. That doesn't look like an email address. Please provide a proper email address."
   `)
 
   cocMessage = await update(cocMessage, 'No')
   expect(getBotResponses()).toMatchInlineSnapshot(`
-    "BOT: That's right!
-    BOT: Here are your answers:
-      First Name: Fred
-      Email: fred@example.com
-      Accepted Code of Conduct: Yes
-
-    If you'd like to change any, then edit your responses above.
-
-    **If everything's correct, simply reply \\"yes\\"**.
+    "BOT: You must answer \\"yes\\" or \\"no\\": Would you like to be notified when Jared starts office hours?
     BOT: There's a problem with an edit that was just made. Please edit the answer again to fix it. That doesn't look like an email address. Please provide a proper email address.
-    BOT: There's a problem with an edit that was just made. Please edit the answer again to fix it. You must agree to the code of conduct to join this community. Do you agree to abide by and uphold the code of conduct? (The answer must be \\"yes\\")"
+    BOT: There's a problem with an edit that was just made. Please edit the answer again to fix it. Feel free to edit any of the answers. Reply \\"yes\\" when we're good to go."
   `)
   await update(emailMessage, 'fred@acme.com')
   expect(getBotResponses()).toMatchInlineSnapshot(`
-    "BOT: That's right!
-    BOT: Here are your answers:
-      First Name: Fred
-      Email: fred@acme.com
-      Accepted Code of Conduct: Yes
-
-    If you'd like to change any, then edit your responses above.
-
-    **If everything's correct, simply reply \\"yes\\"**.
-    BOT: There's a problem with an edit that was just made. Please edit the answer again to fix it. You must agree to the code of conduct to join this community. Do you agree to abide by and uphold the code of conduct? (The answer must be \\"yes\\")"
+    "BOT: You must answer \\"yes\\" or \\"no\\": Would you like to be notified when Jared starts office hours?
+    BOT: There's a problem with an edit that was just made. Please edit the answer again to fix it. Feel free to edit any of the answers. Reply \\"yes\\" when we're good to go."
   `)
 
   // try to send "yes" to complete everything despite there being an edit error
@@ -376,72 +361,68 @@ test('typing and editing to an invalid value', async () => {
 
   expect(getMessageThread()).toMatchInlineSnapshot(`
     "Messages in 🌊-welcome-fredjoe_1234
-    
+
     BOT: Hello <@mock-user> 👋
 
-    I'm a bot and I'm here to welcome you to the Formium Community on Discord! Before you can join in the fun, I need to ask you a few questions. If you have any trouble, please email team@kentcdodds.com with your discord username (\`fredjoe#1234\`), an explanation of the trouble, and a screenshot of the conversation. And we'll get things fixed up for you.
+    I'm a bot and I'm here to welcome you to the Turborepo Community on Discord! Before you can join in the fun, I need to ask you a few questions. If you have any trouble, please email support@turborepo.com with your discord username (\`fredjoe#1234\`), an explanation of the trouble, and a screenshot of the conversation. And we'll get things fixed up for you.
 
     (Note, if you make a mistake, you can edit your responses).
 
-    In less than 5 minutes, you'll have full access to this server. So, let's get started! Here's the first question:
-    BOT: What's your first name?
+    In less than 2 minutes, you'll have full access to this server. So, let's get started! Here's the first question:
+    BOT: **What's your first name?**
     fredjoe: Freddy
     BOT: Great, hi Freddy 👋
     BOT: _I've changed your nickname on this server to Fred. If you'd like to change it back then type: \`/nick fredjoe\`_
-    BOT: What's your email address? (This will look you up on Kent's mailing list. If you're not already on it, you'll be added and will receive a confirmation email.)
+    BOT: **What's your email address?** (This will look you up on Turborepo's mailing list. If you're not already on it, you'll be added and will receive a confirmation email.)
     fredjoe: not an email
     BOT: That doesn't look like an email address. Please provide a proper email address.
     fredjoe: fred@acme.com
     BOT: Awesome, when we're done here, you'll receive a confirmation email to: fred@acme.com.
-    BOT: Our community is commited to certain standards of behavior and we enforce that behavior to ensure it's a nice place to spend time.
-
-    Please read about our code of conduct here: https://kentcdodds.com/conduct
-
-    Do you agree to abide by and uphold the code of conduct? **The only correct answer is \\"yes\\"**
-    fredjoe: Yes
-    BOT: Great, thanks for helping us keep this an awesome place to be.
-    BOT: **Based on what you read in the Code of Conduct**, what's the email address you send Code of Conduct concerns and violations to? (If you're not sure, open the code of conduct to find out).
-    fredjoe: team@kentcdodds.com
-    BOT: That's right!
     BOT: Here are your answers:
-      First Name: Fred
-      Email: fred@acme.com
-      Accepted Code of Conduct: Yes
+      First Name: Freddy
+      Email: fred@acme.com  
 
     If you'd like to change any, then edit your responses above.
 
     **If everything's correct, simply reply \\"yes\\"**.
+    fredjoe: Yes
+    BOT: Awesome, welcome to the Turborepo Community on Discord!
+    BOT: 🎉 You should be good to go now. Don't forget to check fred@example.com for a confirmation email. 📬
+
+    🎊 You now have access to the whole server. Welcome!
+    BOT: https://media.giphy.com/media/pCO5tKdP22RC8/giphy.gif
+    BOT: 
+
+    ━━━━━━━━━━━━━━━━━━━━
+    BOT: Would you like to be notified about Jared's Office Hours in channel_🏫-office-hours-id?
+    fredjoe: team@kentcdodds.com
+    BOT: You must answer \\"yes\\" or \\"no\\": Would you like to be notified when Jared starts office hours?
     fredjoe: yes
     BOT: There are existing errors with your previous answers, please edit your answer above before continuing.
     BOT: Thanks for fixing things up, now we can continue.
-    BOT: Here are your answers:
-      First Name: Freddy
-      Email: fred@acme.com
-      Accepted Code of Conduct: Yes
-
-    If you'd like to change any, then edit your responses above.
-
-    **If everything's correct, simply reply \\"yes\\"**.
+    BOT: Would you like to be notified about Jared's Office Hours in channel_🏫-office-hours-id?
     fredjoe: yes
-    BOT: Awesome, welcome to the Formium Community on Discord!
-    BOT: 🎉 You should be good to go now. Don't forget to check fred@acme.com for a confirmation email. 📬
+    BOT: Great, you'll be notified when Jared's Office Hours start.
+    BOT: It's more fun here when folks have an avatar. You can go ahead and set yours now 😄
 
-    🎊 You now have access to the whole server. Welcome!
-    BOT: https://media.giphy.com/media/MDxjbPCg6DGf8JclbR/giphy.gif
-    BOT: 
+    We got this image using your email address with gravatar.com. You can use it for your avatar if you like.
 
-    👆 that's Kent!
+    https://www.gravatar.com/avatar/53a99aa16438d50f6f7405749684b86e?s=128&d=404
 
-    I'm a pretty neat bot. Learn more about what commands you can give me by sending \`?help\`.
+    Here's how you set your avatar: <https://support.discord.com/hc/en-us/articles/204156688-How-do-I-change-my-avatar->
 
-    ━━━━━━━━━━━━━━━━━━━━
-
-    **If you wanna hang out here for a bit longer, I have a few questions that will help you get set up in this server a bit more.**
-    BOT: Click the icon of the tech you are most interested in right now (or want to learn about). Kent will use this to give you more relevant content in the future.
-    BOT: Would you like to be notified when Kent starts live streaming in channel_💻-kent-live-id?
+    **When you're finished (or if you'd like to just move on), just say \\"done\\"**
     BOT: _I've changed your nickname on this server to Freddy. If you'd like to change it back then type: \`/nick fredjoe\`_
     BOT: Thanks for fixing things up, now we can continue.
-    BOT: Would you like to be notified when Kent starts live streaming in channel_💻-kent-live-id?
+    BOT: It's more fun here when folks have an avatar. You can go ahead and set yours now 😄
+
+    We got this image using your email address with gravatar.com. You can use it for your avatar if you like.
+
+    https://www.gravatar.com/avatar/53a99aa16438d50f6f7405749684b86e?s=128&d=404
+
+    Here's how you set your avatar: <https://support.discord.com/hc/en-us/articles/204156688-How-do-I-change-my-avatar->
+
+    **When you're finished (or if you'd like to just move on), just say \\"done\\"**
     fredjoe: delete
     BOT: This channel is getting deleted for the following reason: Requested by the member
 
@@ -452,7 +433,7 @@ test('typing and editing to an invalid value', async () => {
     Array.from(member.roles.cache.values())
       .map(role => role.name)
       .join(', '),
-  ).toMatchInlineSnapshot(`"Member, @everyone"`)
+  ).toMatchInlineSnapshot(`"Notify: Office Hours, Member, @everyone"`)
 })
 
 test('a new member with some info already', async () => {
@@ -494,61 +475,42 @@ test('a new member with some info already', async () => {
 
   expect(getMessageThread()).toMatchInlineSnapshot(`
     "Messages in 🌊-welcome-fredjoe_1234
-    
+
     BOT: Hello <@mock-user> 👋
 
-    I'm a bot and I'm here to welcome you to the Formium Community on Discord! Before you can join in the fun, I need to ask you a few questions. If you have any trouble, please email team@kentcdodds.com with your discord username (\`fredjoe#1234\`), an explanation of the trouble, and a screenshot of the conversation. And we'll get things fixed up for you.
+    I'm a bot and I'm here to welcome you to the Turborepo Community on Discord! Before you can join in the fun, I need to ask you a few questions. If you have any trouble, please email support@turborepo.com with your discord username (\`fredjoe#1234\`), an explanation of the trouble, and a screenshot of the conversation. And we'll get things fixed up for you.
 
     (Note, if you make a mistake, you can edit your responses).
 
-    In less than 5 minutes, you'll have full access to this server. So, let's get started! Here's the first question:
-    BOT: What's your first name?
+    In less than 2 minutes, you'll have full access to this server. So, let's get started! Here's the first question:
+    BOT: **What's your first name?**
     fredjoe: Fred
     BOT: Great, hi Fred 👋
     BOT: _I've changed your nickname on this server to Fred. If you'd like to change it back then type: \`/nick fredjoe\`_
-    BOT: What's your email address? (This will look you up on Kent's mailing list. If you're not already on it, you'll be added and will receive a confirmation email.)
+    BOT: **What's your email address?** (This will look you up on Turborepo's mailing list. If you're not already on it, you'll be added and will receive a confirmation email.)
     fredjoe: fred+already-subscribed@example.com
-    BOT: Oh, nice, fred+already-subscribed@example.com is already a part of Kent's mailing list (you rock 🤘), so you won't be getting a confirmation email after all.
-    BOT: Our community is commited to certain standards of behavior and we enforce that behavior to ensure it's a nice place to spend time.
-
-    Please read about our code of conduct here: https://kentcdodds.com/conduct
-
-    Do you agree to abide by and uphold the code of conduct? **The only correct answer is \\"yes\\"**
-    fredjoe: yes
-    BOT: Great, thanks for helping us keep this an awesome place to be.
-    BOT: **Based on what you read in the Code of Conduct**, what's the email address you send Code of Conduct concerns and violations to? (If you're not sure, open the code of conduct to find out).
-    fredjoe: team@kentcdodds.com
-    BOT: That's right!
+    BOT: Oh, nice, fred+already-subscribed@example.com is already a part of Turborepo's mailing list (you rock 🤘), so you won't be getting a confirmation email after all.
     BOT: Here are your answers:
       First Name: Fred
-      Email: fred+already-subscribed@example.com
-      Accepted Code of Conduct: Yes
+      Email: fred+already-subscribed@example.com  
 
     If you'd like to change any, then edit your responses above.
 
     **If everything's correct, simply reply \\"yes\\"**.
     fredjoe: yes
-    BOT: Awesome, welcome to the Formium Community on Discord!
+    BOT: Awesome, welcome to the Turborepo Community on Discord!
     BOT: 🎉 You should be good to go now. 
 
     🎊 You now have access to the whole server. Welcome!
-    BOT: https://media.giphy.com/media/MDxjbPCg6DGf8JclbR/giphy.gif
+    BOT: https://media.giphy.com/media/pCO5tKdP22RC8/giphy.gif
     BOT: 
 
-    👆 that's Kent!
-
-    I'm a pretty neat bot. Learn more about what commands you can give me by sending \`?help\`.
-
     ━━━━━━━━━━━━━━━━━━━━
-
-    **If you wanna hang out here for a bit longer, I have a few questions that will help you get set up in this server a bit more.**
-    BOT: Click the icon of the tech you are most interested in right now (or want to learn about). Kent will use this to give you more relevant content in the future.
-    BOT: Would you like to be notified when Kent starts live streaming in channel_💻-kent-live-id?
+    BOT: Would you like to be notified about Jared's Office Hours in channel_🏫-office-hours-id?
+    fredjoe: team@kentcdodds.com
+    BOT: You must answer \\"yes\\" or \\"no\\": Would you like to be notified when Jared starts office hours?
     fredjoe: yes
-    BOT: Cool, when Kent starts live streaming, you'll get notified.
-    BOT: Would you like to be notified when Kent starts <https://kcd.im/office-hours> in channel_🏫-office-hours-id?
-    fredjoe: yes
-    BOT: Great, you'll be notified when Kent's Office Hours start.
+    BOT: Great, you'll be notified when Jared's Office Hours start.
     BOT: Looks like we're all done! Go explore!
 
     We'd love to get to know you a bit. Tell us about you in channel_👶-introductions-id. Here's a template you can use:
@@ -560,6 +522,10 @@ test('a new member with some info already', async () => {
     🤪 I really enjoy:
 
     Enjoy the community!
+    fredjoe: yes
+    BOT: We're all done. This channel will get deleted automatically eventually, but if you want to delete it yourself, then say \\"delete\\".
+    fredjoe: yes
+    BOT: We're all done. This channel will get deleted automatically eventually, but if you want to delete it yourself, then say \\"delete\\".
     fredjoe: anything else?
     BOT: We're all done. This channel will get deleted automatically eventually, but if you want to delete it yourself, then say \\"delete\\"."
   `)
@@ -568,7 +534,5 @@ test('a new member with some info already', async () => {
     Array.from(member.roles.cache.values())
       .map(role => role.name)
       .join(', '),
-  ).toMatchInlineSnapshot(
-    `"Notify: Office Hours, Notify: Kent Live, Member, @everyone"`,
-  )
+  ).toMatchInlineSnapshot(`"Notify: Office Hours, Member, @everyone"`)
 })

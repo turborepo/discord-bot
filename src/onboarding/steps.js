@@ -6,7 +6,6 @@ const {
   getSend,
   CONVERT_KIT_API_KEY,
   CONVERT_KIT_API_SECRET,
-  sleep,
 } = require('./utils')
 
 const memGot = pMemoize(got, {
@@ -68,10 +67,10 @@ const allSteps = [
   },
   {
     name: 'email',
-    question: `**What's your email address?** (This will look you up on Formium's mailing list. If you're not already on it, you'll be added and will receive a confirmation email.)`,
+    question: `**What's your email address?** (This will look you up on Turborepo's mailing list. If you're not already on it, you'll be added and will receive a confirmation email.)`,
     feedback: async answers => {
       if (await getConvertKitSubscriber(answers.email)) {
-        return `Oh, nice, ${answers.email} is already a part of Formium's mailing list (you rock 🤘), so you won't be getting a confirmation email after all.`
+        return `Oh, nice, ${answers.email} is already a part of Turborepo's mailing list (you rock 🤘), so you won't be getting a confirmation email after all.`
       }
       return `Awesome, when we're done here, you'll receive a confirmation email to: ${answers.email}.`
     },
@@ -165,9 +164,9 @@ If you'd like to change any, then edit your responses above.
     `.trim(),
     isQuestionMessage: messageContents =>
       /^Here are your answers/.test(messageContents),
-    feedback: `Awesome, welcome to the Formium Community on Discord!`,
+    feedback: `Awesome, welcome to the Turborepo Community on Discord!`,
     getAnswer: messageContents =>
-      /^Awesome, welcome to the KCD/.test(messageContents) ? true : null,
+      /^Awesome, welcome to the Turborepo/.test(messageContents) ? true : null,
     action: async ({answers, member, channel, isEdit}) => {
       const {guild} = member
       const send = getSend(channel)
@@ -184,7 +183,7 @@ If you'd like to change any, then edit your responses above.
 
       const subscriber = await getConvertKitSubscriber(answers.email)
       const discordTagId = '1960709'
-      const discordForm = '1764542'
+      const discordForm = '1939703'
       let checkEmail = ''
       if (subscriber) {
         await got.post(
@@ -344,51 +343,51 @@ ${isEdit ? '' : `🎊 You now have access to the whole server. Welcome!`}
   //     }
   //   },
   // },
-  // {
-  //   name: 'officeHours',
-  //   question: (answers, member) => {
-  //     const officeHoursChannel = member.guild.channels.cache.find(
-  //       ({name, type}) =>
-  //         name.toLowerCase().includes('office-hours') && type === 'text',
-  //     )
+  {
+    name: 'officeHours',
+    question: (answers, member) => {
+      const officeHoursChannel = member.guild.channels.cache.find(
+        ({name, type}) =>
+          name.toLowerCase().includes('office-hours') && type === 'text',
+      )
 
-  //     return `Would you like to be notified when Jared starts <https://kcd.im/office-hours> in ${officeHoursChannel}?`
-  //   },
-  //   isQuestionMessage: messageContents =>
-  //     /kcd.im\/office-hours/.test(messageContents),
-  //   feedback: answers => {
-  //     return answers.officeHours?.toLowerCase() === 'yes'
-  //       ? `Great, you'll be notified when Jared's Office Hours start.`
-  //       : `No worries, you won't be notified about Jared's Office Hours.`
-  //   },
-  //   action: async ({answers, member}) => {
-  //     if (answers.officeHours !== 'yes') return
+      return `Would you like to be notified about Jared's Office Hours in ${officeHoursChannel}?`
+    },
+    isQuestionMessage: messageContents =>
+      /kcd.im\/office-hours/.test(messageContents),
+    feedback: answers => {
+      return answers.officeHours?.toLowerCase() === 'yes'
+        ? `Great, you'll be notified when Jared's Office Hours start.`
+        : `No worries, you won't be notified about Jared's Office Hours.`
+    },
+    action: async ({answers, member}) => {
+      if (answers.officeHours !== 'yes') return
 
-  //     await member.roles.add(
-  //       member.guild.roles.cache.find(
-  //         ({name}) => name.toLowerCase() === 'notify: office hours',
-  //       ),
-  //       'Requested by user during onboarding',
-  //     )
-  //   },
-  //   getAnswer: messageContents => {
-  //     return /^Great, you'll be notified when Jared's Office Hours start./i.test(
-  //       messageContents,
-  //     )
-  //       ? 'yes'
-  //       : /^No worries, you won't be notified about Jared's Office Hours./.test(
-  //           messageContents,
-  //         )
-  //       ? 'no'
-  //       : null
-  //   },
-  //   validate({message}) {
-  //     const response = message.content
-  //     if (!['yes', 'no'].includes(response.toLowerCase())) {
-  //       return `You must answer "yes" or "no": Would you like to be notified when Jared starts office hours?`
-  //     }
-  //   },
-  // },
+      await member.roles.add(
+        member.guild.roles.cache.find(
+          ({name}) => name.toLowerCase() === 'notify: office hours',
+        ),
+        'Requested by user during onboarding',
+      )
+    },
+    getAnswer: messageContents => {
+      return /^Great, you'll be notified when Jared's Office Hours start./i.test(
+        messageContents,
+      )
+        ? 'yes'
+        : /^No worries, you won't be notified about Jared's Office Hours./.test(
+            messageContents,
+          )
+        ? 'no'
+        : null
+    },
+    validate({message}) {
+      const response = message.content
+      if (!['yes', 'no'].includes(response.toLowerCase())) {
+        return `You must answer "yes" or "no": Would you like to be notified when Jared starts office hours?`
+      }
+    },
+  },
   {
     name: 'avatar',
     question: async answers => {

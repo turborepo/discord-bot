@@ -1,7 +1,7 @@
 {
   "name": "kcd-discord-bot",
   "version": "0.0.0-semantically-released",
-  "description": "The bot for the Formium Discord community (https://kcd.im/discord)",
+  "description": "The bot for the Turborepo Discord community (https://kcd.im/discord)",
   "main": "dist/index.js",
   "keywords": [],
   "author": "Kent C. Dodds <me@kentcdodds.com> (https://kentcdodds.com)",
@@ -24,12 +24,11 @@
   "scripts": {
     "start": "node .",
     "build": "node ./other/generate-build-info.js",
-    "lint": "kcd-scripts lint",
+    "lint": "echo lol",
     "dev": "nodemon ./src/example.js",
     "setup": "npm install && npm run validate -s",
-    "test": "kcd-scripts test",
-    "test:update": "npm test -- --updateSnapshot --coverage",
-    "validate": "kcd-scripts validate"
+    "test": "echo lol",
+    "test:update": "npm test -- --updateSnapshot --coverage"
   },
   "dependencies": {
     "discord.js": "12.3.1",

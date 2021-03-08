@@ -19,7 +19,7 @@ console.log('logging in')
 client.login(process.env.DISCORD_BOT_TOKEN)
 
 const getKcdGuild = () =>
-  client.guilds.cache.find(({name}) => name === 'Formium')
+  client.guilds.cache.find(({name}) => name === 'Turborepo')
 const getKent = () =>
   getKcdGuild().members.cache.find(({user: {username, discriminator}}) => {
     return username === 'jaredpalmer'

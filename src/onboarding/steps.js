@@ -234,7 +234,7 @@ ${isEdit ? '' : `🎊 You now have access to the whole server. Welcome!`}
 
       if (!isEdit) {
         // // this is a gif of Kent doing a flip with the sub-text "SWEEEET!"
-        await send('https://media.giphy.com/media/pCO5tKdP22RC8/giphy.gif')
+        // await send('https://media.giphy.com/media/pCO5tKdP22RC8/giphy.gif')
 
         const moreStuffMessage = `
 ━━━━━━━━━━━━━━━━━━━━

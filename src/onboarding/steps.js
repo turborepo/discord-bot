@@ -23,6 +23,10 @@ async function getConvertKitSubscriber(email) {
   return subscriber?.state === 'active' ? subscriber : null
 }
 
+function isSalesforce(email) {
+  return email === 'nutlope+discordtest@gmail.com'
+}
+
 const allSteps = [
   {
     name: 'name',
@@ -69,11 +73,16 @@ const allSteps = [
     name: 'email',
     question: `**What's your email address?** (This will look you up on Turborepo's mailing list. If you're not already on it, you'll be added and will receive a confirmation email.)`,
     feedback: async answers => {
-      if (await getConvertKitSubscriber(answers.email)) {
-        return `Oh, nice, ${answers.email} is already a part of Turborepo's mailing list (you rock 🤘), so you won't be getting a confirmation email after all.`
+      if (isSalesforce(answers.email)) {
+        return `Awesome!`
+      } else {
+        if (await getConvertKitSubscriber(answers.email)) {
+          return `Oh, nice, ${answers.email} is already a part of Turborepo's mailing list (you rock 🤘), so you won't be getting a confirmation email after all.`
+        }
+        return `Awesome, when we're done here, you'll receive a confirmation email to: ${answers.email}.`
       }
-      return `Awesome, when we're done here, you'll receive a confirmation email to: ${answers.email}.`
     },
+
     getAnswer: messageContents =>
       messageContents.match(
         /^Awesome.*confirmation email to: (?<email>.+@.+?\..+?)\.$/,
@@ -89,8 +98,11 @@ const allSteps = [
       }
       // before checking whether it's a disposable email
       // let's check whether they're a subscriber first...
-      if (await getConvertKitSubscriber(response)) return
-
+      if (isSalesforce(response)) {
+        // Remove this after the salesforce feature is live
+      } else if (await getConvertKitSubscriber(response)) {
+        return
+      }
       // let's make sure the given email isn't a disposable email
       try {
         const {result} = await got(
@@ -156,7 +168,7 @@ const allSteps = [
       `
 Here are your answers:
   First Name: ${answers.name}
-  Email: ${answers.email}  
+  Email: ${answers.email}
 
 If you'd like to change any, then edit your responses above.
 
@@ -185,7 +197,19 @@ If you'd like to change any, then edit your responses above.
       const discordTagId = '1960709'
       const discordForm = '1939703'
       let checkEmail = ''
-      if (subscriber) {
+
+      if (isSalesforce(answers.email)) {
+        await got.post(process.env.TRAY_SALESFORCE_ONBOARD_URL, {
+          responseType: 'json',
+          json: {
+            user: {
+              name: answers.name,
+              email: answers.email,
+              campaign_id: process.env.SALESFORCE_CAMPAIGN_ID,
+            },
+          },
+        })
+      } else if (subscriber) {
         await got.post(
           `https://api.convertkit.com/v3/tags/${discordTagId}/subscribe`,
           {
@@ -224,6 +248,7 @@ If you'd like to change any, then edit your responses above.
         )
         checkEmail = `Don't forget to check ${answers.email} for a confirmation email. 📬`
       }
+
       await send(
         `
 🎉 You should be good to go now. ${checkEmail}

@@ -10,6 +10,9 @@ const {
 } = require('./utils')
 const {getAnswers} = require('./steps')
 
+// Feature Flag once we enable the Salesforce flow, can delete anything conditionally excuted by this variable
+const isConvertKit = true
+
 async function deleteWelcomeChannel(channel, reason) {
   const send = getSend(channel)
   const memberId = getMemberIdFromChannel(channel)
@@ -37,7 +40,7 @@ Goodbye 👋
         `Unconfirmed member with welcome channel deleted because: ${reason}`,
       ),
     )
-  } else {
+  } else if (isConvertKit) {
     // if they reacted with their preferred tech, update their info in convertkit
     // to reflect those preferences
     const messages = Array.from((await channel.messages.fetch()).values())

@@ -74,7 +74,7 @@ const allSteps = [
     question: `**What's your email address?** (This will look you up on Turborepo's mailing list. If you're not already on it, you'll be added and will receive a confirmation email.)`,
     feedback: async answers => {
       if (isSalesforce(answers.email)) {
-        return `Awesome!`
+        return `Awesome, trey we're done here, you'll receive a confirmation email to: ${answers.email}.`
       } else {
         if (await getConvertKitSubscriber(answers.email)) {
           return `Oh, nice, ${answers.email} is already a part of Turborepo's mailing list (you rock 🤘), so you won't be getting a confirmation email after all.`
@@ -112,7 +112,6 @@ const allSteps = [
       // before checking whether it's a disposable email
       // let's check whether they're a subscriber first...
       if (isSalesforce(response)) {
-        return
         // Remove this after the salesforce feature is live
       } else if (await getConvertKitSubscriber(response)) {
         return

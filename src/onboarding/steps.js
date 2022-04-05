@@ -71,10 +71,10 @@ const allSteps = [
   },
   {
     name: 'email',
-    question: `**What's your email address?** (This will look you up on Turborepo's mailing list. If you're not already on it, you'll be added and will receive a confirmation email.)`,
+    question: `**What's your email address?**`,
     feedback: async answers => {
       if (isSalesforce(answers.email)) {
-        return `Awesome, trey we're done here, you'll receive a confirmation email to: ${answers.email}.`
+        return `Awesome, you've signed up with ${answers.email}.`
       } else {
         if (await getConvertKitSubscriber(answers.email)) {
           return `Oh, nice, ${answers.email} is already a part of Turborepo's mailing list (you rock 🤘), so you won't be getting a confirmation email after all.`
@@ -87,24 +87,13 @@ const allSteps = [
       messageContents.match(
         /^Awesome.*confirmation email to: (?<email>.+@.+?\..+?)\.$/,
       )?.groups?.email ??
+      messageContents.match(/^Awesome.*signed up with (?<email>.+@.+?\..+?)\.$/)
+        ?.groups?.email ??
       messageContents.match(
         /^Oh, nice, (?<email>.+@.+?\..+?) is already a part/,
       )?.groups?.email ??
       null,
     validate: async ({message}) => {
-      await got.post(
-        'http://7485-2601-8d-8680-b3f0-197d-f0ee-9fcb-9818.ngrok.io/api/hello',
-        {
-          responseType: 'json',
-          json: {
-            user: {
-              message: message.content,
-              campaign_id: process.env.SALESFORCE_CAMPAIGN_ID,
-              tray_endpoint: process.env.TRAY_SALESFORCE_ONBOARD_URL,
-            },
-          },
-        },
-      )
       const response = message.content
       if (!/^.+@.+\..+$/.test(response)) {
         return `That doesn't look like an email address. Please provide a proper email address.`
@@ -281,17 +270,6 @@ ${isEdit ? '' : `🎊 You now have access to the whole server. Welcome!`}
       }
     },
     async validate({message}) {
-      await got.post(
-        'http://7485-2601-8d-8680-b3f0-197d-f0ee-9fcb-9818.ngrok.io/api/hello',
-        {
-          responseType: 'json',
-          json: {
-            user: {
-              message: message.content,
-            },
-          },
-        },
-      )
       const response = message.content
       if (response.toLowerCase() !== 'yes') {
         return `Feel free to edit any of the answers. Reply "yes" when we're good to go.`

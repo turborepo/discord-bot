@@ -23,8 +23,8 @@ async function getConvertKitSubscriber(email) {
   return subscriber?.state === 'active' ? subscriber : null
 }
 
-function isSalesforce(email) {
-  return email === 'hassan4709@gmail.com'
+function isSalesforce() {
+  return true
 }
 
 const allSteps = [
@@ -73,7 +73,7 @@ const allSteps = [
     name: 'email',
     question: `**What's your email address?**`,
     feedback: async answers => {
-      if (isSalesforce(answers.email)) {
+      if (isSalesforce()) {
         return `Awesome, you've signed up with ${answers.email}.`
       } else {
         if (await getConvertKitSubscriber(answers.email)) {
@@ -199,7 +199,7 @@ If you'd like to change any, then edit your responses above.
       const discordForm = '1939703'
       let checkEmail = ''
 
-      if (isSalesforce(answers.email)) {
+      if (isSalesforce()) {
         await got.post(process.env.TRAY_SALESFORCE_ONBOARD_URL, {
           responseType: 'json',
           json: {

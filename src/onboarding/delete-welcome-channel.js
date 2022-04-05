@@ -11,7 +11,7 @@ const {
 const {getAnswers} = require('./steps')
 
 // Feature Flag once we enable the Salesforce flow, can delete anything conditionally excuted by this variable
-const isConvertKit = true
+const isConvertKit = false
 
 async function deleteWelcomeChannel(channel, reason) {
   const send = getSend(channel)

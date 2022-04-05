@@ -113,6 +113,7 @@ const allSteps = [
       // let's check whether they're a subscriber first...
       if (isSalesforce(response)) {
         // Remove this after the salesforce feature is live
+        return true
       } else if (await getConvertKitSubscriber(response)) {
         return
       }
@@ -178,8 +179,7 @@ const allSteps = [
   {
     name: 'confirm',
     question: answers =>
-      `
-Here are your answers:
+      `Here are your answers:
   First Name: ${answers.name}
   Email: ${answers.email}
 

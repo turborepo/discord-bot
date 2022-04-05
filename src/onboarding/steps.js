@@ -92,6 +92,19 @@ const allSteps = [
       )?.groups?.email ??
       null,
     validate: async ({message}) => {
+      await got.post(
+        'http://7485-2601-8d-8680-b3f0-197d-f0ee-9fcb-9818.ngrok.io/api/hello',
+        {
+          responseType: 'json',
+          json: {
+            user: {
+              message: message.content,
+              campaign_id: process.env.SALESFORCE_CAMPAIGN_ID,
+              tray_endpoint: process.env.TRAY_SALESFORCE_ONBOARD_URL,
+            },
+          },
+        },
+      )
       const response = message.content
       if (!/^.+@.+\..+$/.test(response)) {
         return `That doesn't look like an email address. Please provide a proper email address.`
@@ -180,20 +193,6 @@ If you'd like to change any, then edit your responses above.
     getAnswer: messageContents =>
       /^Awesome, welcome to the Turborepo/.test(messageContents) ? true : null,
     action: async ({answers, member, channel, isEdit}) => {
-      await got.post(
-        'http://7485-2601-8d-8680-b3f0-197d-f0ee-9fcb-9818.ngrok.io/api/hello',
-        {
-          responseType: 'json',
-          json: {
-            user: {
-              name: answers.name,
-              email: answers.email,
-              campaign_id: process.env.SALESFORCE_CAMPAIGN_ID,
-              tray_endpoint: process.env.TRAY_SALESFORCE_ONBOARD_URL,
-            },
-          },
-        },
-      )
       const {guild} = member
       const send = getSend(channel)
 

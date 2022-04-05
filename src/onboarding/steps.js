@@ -24,7 +24,7 @@ async function getConvertKitSubscriber(email) {
 }
 
 function isSalesforce(email) {
-  return email === 'nutlope+discordtest@gmail.com'
+  return email === 'nutlope@gmail.com'
 }
 
 const allSteps = [

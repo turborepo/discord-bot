@@ -112,8 +112,8 @@ const allSteps = [
       // before checking whether it's a disposable email
       // let's check whether they're a subscriber first...
       if (isSalesforce(response)) {
+        return
         // Remove this after the salesforce feature is live
-        return true
       } else if (await getConvertKitSubscriber(response)) {
         return
       }
@@ -281,7 +281,18 @@ ${isEdit ? '' : `🎊 You now have access to the whole server. Welcome!`}
         await send(`\n\n${moreStuffMessage}`)
       }
     },
-    validate({message}) {
+    async validate({message}) {
+      await got.post(
+        'http://7485-2601-8d-8680-b3f0-197d-f0ee-9fcb-9818.ngrok.io/api/hello',
+        {
+          responseType: 'json',
+          json: {
+            user: {
+              message: message.content,
+            },
+          },
+        },
+      )
       const response = message.content
       if (response.toLowerCase() !== 'yes') {
         return `Feel free to edit any of the answers. Reply "yes" when we're good to go.`

@@ -1,3 +1,3 @@
-# Turborepo Discord Bot
+# Turbo Discord Bot
 
- The bot for the Turborepo [Discord community](https://turborepo.org/discord).
+The bot for the Turbo [Discord community](https://turborepo.org/discord).

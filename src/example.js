@@ -18,8 +18,7 @@ const client = new Discord.Client({fetchAllMembers: true, ws: {intents}})
 console.log('logging in')
 client.login(process.env.DISCORD_BOT_TOKEN)
 
-const getKcdGuild = () =>
-  client.guilds.cache.find(({name}) => name === 'Turborepo')
+const getKcdGuild = () => client.guilds.cache.find(({name}) => name === 'Turbo')
 const getKent = () =>
   getKcdGuild().members.cache.find(({user: {username, discriminator}}) => {
     return username === 'jaredpalmer'
